@@ -1,11 +1,16 @@
 package com.example.cursomc.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Categoria implements Serializable { /* Classe */
@@ -16,6 +21,9 @@ public class Categoria implements Serializable { /* Classe */
 	@GeneratedValue (strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@ManyToMany(mappedBy = ("categoria")) /* Mapeaia o relaciomento criado em categorias, não seno assim necessário replicar todo mapeamento novamente */
+	private List<Produto> produtos = new ArrayList<>();
 	
 	/* Construtor vazio obrigatório em java */
 	public Categoria() {	
@@ -45,6 +53,14 @@ public class Categoria implements Serializable { /* Classe */
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
 
 	/* HashCode Equals para comparação de objetos, padrão java obrigatório */
 	
@@ -72,6 +88,8 @@ public class Categoria implements Serializable { /* Classe */
 			return false;
 		return true;
 	}
+
+
 	
 	
 
